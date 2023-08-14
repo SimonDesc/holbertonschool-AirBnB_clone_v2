@@ -24,12 +24,14 @@ def c(text):
     text = text.replace("_", " ")
     return f"C {escape(text)}"
 
-@app.route("/python/", defaults={'text': 'is cool'}, strict_slashes=False)
+
+@app.route("/python/", defaults={"text": "is cool"}, strict_slashes=False)
 @app.route("/python/<text>", strict_slashes=False)
 def python(text):
     """Display python is cool by default"""
     text = text.replace("_", " ")
     return f"Python {escape(text)}"
+
 
 if __name__ == "__main__":
     app.run()
