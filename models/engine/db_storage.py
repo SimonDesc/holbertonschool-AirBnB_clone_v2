@@ -12,8 +12,9 @@ from models.place import Place
 from models.review import Review
 
 
-class DBStorage():
+class DBStorage:
     """This class manages storage of hbnb models"""
+
     __engine = None
     __session = None
 
@@ -24,9 +25,10 @@ class DBStorage():
         host = os.getenv("HBNB_MYSQL_HOST")
         db = os.getenv("HBNB_MYSQL_DB")
         env = os.getenv("HBNB_ENV")
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:3306/{}'.
-                                      format(user, passwd, host, db),
-                                      pool_pre_ping=True)
+        self.__engine = create_engine(
+            "mysql+mysqldb://{}:{}@{}:3306/{}".format(user, passwd, host, db),
+            pool_pre_ping=True,
+        )
 
         if env == "test":
             Base.metadata.drop_all(self.__engine)
@@ -73,3 +75,6 @@ class DBStorage():
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(Session)
+
+    def close(self):
+        self.__session.remove()
