@@ -97,6 +97,7 @@ def state_with_id(id):
     list_states = storage.all("State")
     return render_template("9-states.html", states=list_states, id=id)
 
+
 @app.teardown_appcontext
 def teardown(err):
     """remove the current session"""
