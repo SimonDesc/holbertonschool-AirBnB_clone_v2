@@ -82,15 +82,20 @@ def cities_by_states():
 
 
 @app.route("/states", strict_slashes=False)
-@app.route("/states/<id>", strict_slashes=False)
-def states(id=None):
-    """
-    Function called with /states route
-    Display html page
-    """
-    states_list = storage.all("State")
-    return render_template("9-states.html", states=states_list, id=id)
+def display_states():
+    """function called with /states route that display a
+    HTML page with the list of all State objects"""
+    list_states = storage.all("State")
+    return render_template("7-states_list.html", states=list_states)
 
+
+@app.route("/states/<id>", strict_slashes=False)
+def state_with_id(id):
+    """function called with /states/<id> route that display a
+    HTML page with the list of City objects linked to the State
+    if a State object is found with this id ("Not found!")"""
+    list_states = storage.all("State")
+    return render_template("9-states.html", states=list_states, id=id)
 
 @app.teardown_appcontext
 def teardown(err):
